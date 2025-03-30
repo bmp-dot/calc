@@ -85,6 +85,8 @@ export default function CalculatorApp() {
         <h2 className="text-xl font-bold mb-4 text-[#7A1FA2]">Capacity Calculator</h2>
         <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex flex-col space-y-4 w-full lg:w-1/2">
+          
+           
           <input
             type="text"
             value={numServers}
@@ -180,6 +182,11 @@ export default function CalculatorApp() {
           <input
             type="text"
             placeholder="# Compute Cores per BE"
+            className="p-2 border rounded-lg"
+          />
+          <input
+            type="text"
+            placeholder="Percent Full"
             className="p-2 border rounded-lg"
           />
           <input
