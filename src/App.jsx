@@ -117,29 +117,32 @@ export default function CalculatorApp() {
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          <select
-            value={failureDomain}
-            onChange={(e) => setFailureDomain(e.target.value)}
-            className="p-2 border rounded-lg"
-          >
-            <option value=""># of Failure Domains</option>
-            {(() => {
-              const options = [];
-              const num = parseInt(numServers);
-              if (!isNaN(num) && num > 0) {
-                const steps = [1, 2, 3, 4, 5];
-                steps.forEach(div => {
-                  const value = num % div === 0 ? num / div : null;
-                  if (value !== null && value > 0 && !options.includes(value)) {
-                    options.push(value);
-                  }
-                });
-              }
-              return options.map(val => (
-                <option key={val} value={val}>{val}</option>
-              ));
-            })()}
-          </select>
+<select
+  value={failureDomain}
+  onChange={(e) => setFailureDomain(e.target.value)}
+  className="p-2 border rounded-lg"
+>
+  <option value=""># of Failure Domains</option>
+  {(() => {
+    const options = [];
+    const num = parseInt(numServers);
+    if (!isNaN(num) && num > 0) {
+      for (let div = 1; div <= num; div++) {
+        if (num % div === 0) {
+          const value = num / div;
+          if (value < 19) continue;
+          if (value > 0 && !options.includes(value)) {
+            options.push(value);
+          }
+        }
+      }
+    }
+    return options.map(val => (
+      <option key={val} value={val}>{val}</option>
+    ));
+  })()}
+</select>
+
           <input
             type="text"
             value={spare}
