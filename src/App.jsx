@@ -13,6 +13,7 @@ export default function CalculatorApp() {
   const [usableCapacity, setUsableCapacity] = useState(null);
   const [efficiency, setEfficiency] = useState(null);
   const [backendsPerDomain, setBackendsPerDomain] = useState(null);
+  const [failureDomainUsable, setFailureDomainUsable] = useState(null);
 
   useEffect(() => {
     // Automatically calculate Data Stripe using formula: IF(SUM(numServers - parity -1)>16,16,SUM(numServers - parity -1))
@@ -68,6 +69,10 @@ export default function CalculatorApp() {
     const failureDomainValue = parseInt(failureDomain);
     if (!isNaN(failureDomainValue) && !isNaN(servers) && failureDomainValue !== 0) {
       const perDomain = servers / failureDomainValue;
+      if (!isNaN(totalUsableCapacity)) {
+        const usablePerDomain = totalUsableCapacity / failureDomainValue;
+        setFailureDomainUsable(`Failure Domain Usable Capacity: ${usablePerDomain.toLocaleString(undefined, { maximumFractionDigits: 2 })}`);
+      }
       setBackendsPerDomain(`Backends per Failure Domain: ${perDomain.toFixed(2)}`);
     } else {
       setBackendsPerDomain(null);
@@ -162,6 +167,7 @@ export default function CalculatorApp() {
           {result !== null && <p className="text-lg">Total Number of drives: <span className="font-bold">{result.split(': ')[1]}</span></p>}
           {efficiency !== null && rawTotal !== null && usableCapacity !== null && <p className="text-lg">Efficiency: <span className="font-bold">{efficiency.split(': ')[1]}</span></p>}
         {backendsPerDomain !== null && <p className="text-lg">Backends per Failure Domain: <span className="font-bold">{backendsPerDomain.split(': ')[1]}</span></p>}
+          {failureDomainUsable !== null && <p className="text-lg">Failure Domain Usable Capacity: <span className="font-bold">{failureDomainUsable.split(': ')[1]}</span></p>}
         </div>
       </div>
     </div>
