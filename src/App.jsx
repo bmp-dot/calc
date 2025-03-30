@@ -81,21 +81,22 @@ export default function CalculatorApp() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 p-4 sm:p-8">
-      <h1 className="text-2xl font-bold mb-4">Capacity Calculator</h1>
-      <div className="flex flex-col lg:flex-row gap-6 border border-gray-300 rounded-lg shadow-md p-6 bg-white w-full max-w-4xl mx-auto">
+      <div className="border border-gray-300 rounded-lg shadow-md p-6 bg-white w-full max-w-4xl mx-auto mb-8">
+        <h2 className="text-xl font-bold mb-4 text-[#7A1FA2]">Capacity Calculator</h2>
+        <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex flex-col space-y-4 w-full lg:w-1/2">
           <input
             type="text"
             value={numServers}
             onChange={(e) => setNumServers(e.target.value)}
-            placeholder="# of Backend Servers"
+            placeholder="# BE hosts"
             className="p-2 border rounded-lg"
           />
           <input
             type="text"
             value={numNVMe}
             onChange={(e) => setNumNVMe(e.target.value)}
-            placeholder="# NVMe per Backend"
+            placeholder="# NVMe per BE"
             className="p-2 border rounded-lg"
           />
           <select
@@ -168,6 +169,43 @@ export default function CalculatorApp() {
           {efficiency !== null && rawTotal !== null && usableCapacity !== null && <p className="text-lg">Efficiency: <span className="font-bold">{efficiency.split(': ')[1]}</span></p>}
         {backendsPerDomain !== null && <p className="text-lg">Backends per Failure Domain: <span className="font-bold">{backendsPerDomain.split(': ')[1]}</span></p>}
           {failureDomainUsable !== null && <p className="text-lg">Failure Domain Usable Capacity: <span className="font-bold">{failureDomainUsable.split(': ')[1]}</span></p>}
+        </div>
+      </div>
+      </div>
+
+      {/* Resiliency Calculator Section */}
+      <div className="mt-12 border border-gray-300 rounded-lg shadow-md p-6 bg-white w-full max-w-4xl mx-auto">
+        <h2 className="text-xl font-bold mb-4 text-[#7A1FA2]">Resiliency Calculator</h2>
+        <div className="flex flex-col space-y-4 w-full lg:w-1/2">
+          <input
+            type="text"
+            placeholder="# Compute Cores per BE"
+            className="p-2 border rounded-lg"
+          />
+          <input
+            type="text"
+            value={failureDomainUsable ? failureDomainUsable.split(': ')[1] : ''}
+            readOnly
+            placeholder="Failure Domain Usable Capacity"
+            className="p-2 border rounded-lg bg-gray-200 cursor-not-allowed"
+          />
+          <select
+            className="p-2 border rounded-lg"
+            
+            
+          >
+            <option value=""># FD Failures</option>
+            {[1, 2, 3, 4].filter(n => !parity || n <= parseInt(parity)).map(n => (
+              <option key={n} value={n}>{n}</option>
+            ))}
+          </select>
+          <input
+            type="text"
+            value={failureDomainUsable ? failureDomainUsable.split(': ')[1] : ''}
+            readOnly
+            placeholder="Failure Domain Usable Capacity"
+            className="p-2 border rounded-lg bg-gray-200 cursor-not-allowed"
+          />
         </div>
       </div>
     </div>
