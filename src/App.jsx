@@ -7,11 +7,12 @@ export default function CalculatorApp() {
   const [data, setData] = useState('');
   const [parity, setParity] = useState('');
   const [spare, setSpare] = useState('');
+  const [failureDomain, setFailureDomain] = useState('');
   const [result, setResult] = useState(null);
-  const [rawPerNode, setRawPerNode] = useState(null);
   const [rawTotal, setRawTotal] = useState(null);
   const [usableCapacity, setUsableCapacity] = useState(null);
   const [efficiency, setEfficiency] = useState(null);
+  const [backendsPerDomain, setBackendsPerDomain] = useState(null);
 
   useEffect(() => {
     // Automatically calculate Data Stripe using formula: IF(SUM(numServers - parity -1)>16,16,SUM(numServers - parity -1))
@@ -30,7 +31,6 @@ export default function CalculatorApp() {
     const spareValue = parseFloat(spare);
 
     let totalDrives = null;
-    let rawPerNodeCapacity = null;
     let rawTotalCapacity = null;
     let totalUsableCapacity = null;
     let efficiencyValue = null;
@@ -39,9 +39,7 @@ export default function CalculatorApp() {
       totalDrives = servers * nvme;
     }
 
-    if (!isNaN(nvme) && !isNaN(size)) {
-      rawPerNodeCapacity = nvme * size;
-    }
+    
 
     if (!isNaN(servers) && !isNaN(nvme) && !isNaN(size)) {
       rawTotalCapacity = servers * nvme * size;
@@ -64,11 +62,17 @@ export default function CalculatorApp() {
     }
 
     setResult(totalDrives !== null ? `Total Number of drives: ${totalDrives.toLocaleString()}` : null);
-    setRawPerNode(rawPerNodeCapacity !== null ? `Raw Per Host Capacity TB: ${rawPerNodeCapacity.toLocaleString()}` : null);
     setRawTotal(rawTotalCapacity !== null ? `Total Raw Capacity TB: ${rawTotalCapacity.toLocaleString()}` : null);
     setUsableCapacity(totalUsableCapacity !== null ? `Total Usable Capacity TB: ${totalUsableCapacity.toLocaleString()}` : null);
     setEfficiency(efficiencyValue !== null ? `Efficiency: ${(efficiencyValue * 100).toFixed(2)}%` : null);
-  }, [numServers, numNVMe, nvmeSize, data, parity, spare]);
+    const failureDomainValue = parseInt(failureDomain);
+    if (!isNaN(failureDomainValue) && !isNaN(servers) && failureDomainValue !== 0) {
+      const perDomain = servers / failureDomainValue;
+      setBackendsPerDomain(`Backends per Failure Domain: ${perDomain.toFixed(2)}`);
+    } else {
+      setBackendsPerDomain(null);
+    }
+  }, [numServers, numNVMe, nvmeSize, data, parity, spare, failureDomain]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 p-4 sm:p-8">
@@ -86,7 +90,7 @@ export default function CalculatorApp() {
             type="text"
             value={numNVMe}
             onChange={(e) => setNumNVMe(e.target.value)}
-            placeholder="# NVMe per System"
+            placeholder="# NVMe per Backend"
             className="p-2 border rounded-lg"
           />
           <input
@@ -113,6 +117,29 @@ export default function CalculatorApp() {
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
+          <select
+            value={failureDomain}
+            onChange={(e) => setFailureDomain(e.target.value)}
+            className="p-2 border rounded-lg"
+          >
+            <option value=""># of Failure Domains</option>
+            {(() => {
+              const options = [];
+              const num = parseInt(numServers);
+              if (!isNaN(num) && num > 0) {
+                const steps = [1, 2, 3, 4, 5];
+                steps.forEach(div => {
+                  const value = num % div === 0 ? num / div : null;
+                  if (value !== null && value > 0 && !options.includes(value)) {
+                    options.push(value);
+                  }
+                });
+              }
+              return options.map(val => (
+                <option key={val} value={val}>{val}</option>
+              ));
+            })()}
+          </select>
           <input
             type="text"
             value={spare}
@@ -126,6 +153,7 @@ export default function CalculatorApp() {
           {usableCapacity !== null && <p className="text-lg">Total Usable Capacity TB: <span className="font-bold">{usableCapacity.split(': ')[1]}</span></p>}
           {result !== null && <p className="text-lg">Total Number of drives: <span className="font-bold">{result.split(': ')[1]}</span></p>}
           {efficiency !== null && rawTotal !== null && usableCapacity !== null && <p className="text-lg">Efficiency: <span className="font-bold">{efficiency.split(': ')[1]}</span></p>}
+        {backendsPerDomain !== null && <p className="text-lg">Backends per Failure Domain: <span className="font-bold">{backendsPerDomain.split(': ')[1]}</span></p>}
         </div>
       </div>
     </div>
