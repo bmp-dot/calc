@@ -93,13 +93,18 @@ export default function CalculatorApp() {
             placeholder="# NVMe per Backend"
             className="p-2 border rounded-lg"
           />
-          <input
-            type="text"
+          <select
             value={nvmeSize}
             onChange={(e) => setNvmeSize(e.target.value)}
-            placeholder="NVMe Size"
             className="p-2 border rounded-lg"
-          />
+          >
+            <option value="">Select NVMe Size</option>
+            <option value="30.72">30.72 TB</option>
+            <option value="15.36">15.36 TB</option>
+            <option value="7.68">7.68 TB</option>
+            <option value="3.84">3.84 TB</option>
+            <option value="1.92">1.92 TB</option>
+          </select>
           <input
             type="text"
             value={data}
