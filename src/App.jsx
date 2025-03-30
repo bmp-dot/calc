@@ -199,13 +199,6 @@ export default function CalculatorApp() {
               <option key={n} value={n}>{n}</option>
             ))}
           </select>
-          <input
-            type="text"
-            value={failureDomainUsable ? failureDomainUsable.split(': ')[1] : ''}
-            readOnly
-            placeholder="Failure Domain Usable Capacity"
-            className="p-2 border rounded-lg bg-gray-200 cursor-not-allowed"
-          />
         </div>
       </div>
     </div>
