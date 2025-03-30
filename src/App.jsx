@@ -4,7 +4,6 @@ export default function CalculatorApp() {
   const [numServers, setNumServers] = useState('');
   const [numNVMe, setNumNVMe] = useState('');
   const [nvmeSize, setNvmeSize] = useState('');
-  // const [data, setData] = useState('');
   const [data, setData] = useState('');
   const [parity, setParity] = useState('');
   const [spare, setSpare] = useState('');
@@ -72,10 +71,10 @@ export default function CalculatorApp() {
   }, [numServers, numNVMe, nvmeSize, data, parity, spare]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100 p-8">
+    <div className="flex flex-col min-h-screen bg-gray-100 p-4 sm:p-8">
       <h1 className="text-2xl font-bold mb-4">Capacity Calculator</h1>
-      <div className="flex border border-gray-300 rounded-lg shadow-md p-6 bg-white">
-        <div className="flex flex-col space-y-4 mr-12">
+      <div className="flex flex-col lg:flex-row gap-6 border border-gray-300 rounded-lg shadow-md p-6 bg-white w-full max-w-4xl mx-auto">
+        <div className="flex flex-col space-y-4 w-full lg:w-1/2">
           <input
             type="text"
             value={numServers}
@@ -122,8 +121,8 @@ export default function CalculatorApp() {
             className="p-2 border rounded-lg"
           />
         </div>
-        <div className="flex flex-col space-y-4 bg-white border border-[#7A1FA2] p-4 rounded-lg text-[#7A1FA2]">
-                    {rawTotal !== null && <p className="text-lg">Total Raw Capacity TB: <span className="font-bold">{rawTotal.split(': ')[1]}</span></p>}
+        <div className="flex flex-col space-y-4 w-full lg:w-1/2 bg-white border border-[#7A1FA2] p-4 rounded-lg text-[#7A1FA2]">
+          {rawTotal !== null && <p className="text-lg">Total Raw Capacity TB: <span className="font-bold">{rawTotal.split(': ')[1]}</span></p>}
           {usableCapacity !== null && <p className="text-lg">Total Usable Capacity TB: <span className="font-bold">{usableCapacity.split(': ')[1]}</span></p>}
           {result !== null && <p className="text-lg">Total Number of drives: <span className="font-bold">{result.split(': ')[1]}</span></p>}
           {efficiency !== null && rawTotal !== null && usableCapacity !== null && <p className="text-lg">Efficiency: <span className="font-bold">{efficiency.split(': ')[1]}</span></p>}
