@@ -113,7 +113,7 @@ export default function CalculatorApp() {
                 value={numServers}
                 onChange={(e) => setNumServers(e.target.value)}
                 placeholder="# BE hosts"
-                className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 min="0"
               />
             </div>
@@ -124,7 +124,7 @@ export default function CalculatorApp() {
                 value={numNVMe}
                 onChange={(e) => setNumNVMe(e.target.value)}
                 placeholder="# NVMe per BE"
-                className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 min="0"
               />
             </div>
@@ -139,7 +139,7 @@ export default function CalculatorApp() {
                     setNumFourKDrives('');
                   }
                 }}
-                className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
               >
                 <option value="">Select NVMe Size</option>
                 {[1.92, 3.84, 7.68, 15.36, 30.72, 61.44, 122.88].map((size) => (
@@ -154,7 +154,7 @@ export default function CalculatorApp() {
                   <select
                     value={fourKDrivers}
                     onChange={(e) => setFourKDrivers(e.target.value)}
-                    className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+                    className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
                   >
                     <option value="">Select 4k NVMe Size</option>
                     {[1.6, 3.2, 6.4, 12.8, 25.6].map((size) => (
@@ -169,7 +169,7 @@ export default function CalculatorApp() {
                     value={numFourKDrives}
                     readOnly
                     placeholder="# 4k Drives per Server (auto-calculated)"
-                    className="p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-full p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
                 </div>
               </>
@@ -181,7 +181,7 @@ export default function CalculatorApp() {
                 value={parity ? Math.min(16, (parseInt(numServers) || 0) - parseInt(parity) - 1) : ''}
                 readOnly
                 placeholder="Data Stripe (auto-calculated)"
-                className="p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
             </div>
             <div>
@@ -189,7 +189,7 @@ export default function CalculatorApp() {
               <select
                 value={parity}
                 onChange={(e) => setParity(e.target.value)}
-                className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
               >
                 <option value="">Protection Level</option>
                 {[2, 3, 4].map((p) => (
@@ -202,7 +202,7 @@ export default function CalculatorApp() {
               <select
                 value={failureDomain}
                 onChange={(e) => setFailureDomain(e.target.value)}
-                className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
               >
                 <option value=""># of Failure Domains</option>
                 {(() => {
@@ -232,7 +232,7 @@ export default function CalculatorApp() {
                 value={spare}
                 onChange={(e) => setSpare(e.target.value)}
                 placeholder="Virtual Hot Spare"
-                className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 min="0"
               />
             </div>
