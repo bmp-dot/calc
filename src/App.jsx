@@ -93,7 +93,7 @@ export default function CalculatorApp() {
       );
       setFailureDomainUsable(
         usablePerDomain > 0
-          ? `Failure Domain Usable Capacity: ${usablePerDomain.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+          ? `Failure Domain Usable Capacity TB: ${usablePerDomain.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
           : null
       );
     } else {
