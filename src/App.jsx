@@ -7,7 +7,7 @@ export default function CalculatorApp() {
   const [fourKDrivers, setFourKDrivers] = useState('');
   const [numFourKDrives, setNumFourKDrives] = useState('');
   const [parity, setParity] = useState('');
-  const [spare, setSpare] = useState('');
+  const [spare, setSpare] = useState('1');
   const [failureDomain, setFailureDomain] = useState('');
   const [hostFailures, setHostFailures] = useState('');
   const [result, setResult] = useState(null);
@@ -17,7 +17,7 @@ export default function CalculatorApp() {
   const [backendsPerDomain, setBackendsPerDomain] = useState(null);
   const [failureDomainUsable, setFailureDomainUsable] = useState(null);
   const [capacityToRecover, setCapacityToRecover] = useState(null);
-  const [spare, setSpare] = useState('1'); // Changed from '' to '1'
+
 
   useEffect(() => {
     const servers = parseInt(numServers) || 0;
