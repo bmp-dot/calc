@@ -173,7 +173,7 @@ export default function CalculatorApp() {
             >
               <option value="">Protection Level</option>
               {[2, 3, 4].map((p) => (
-                <option key={p} value={p}>+{p}</option>
+                <option key={p} value={p}>Protection Level +{p}</option>
               ))}
             </select>
             <select
