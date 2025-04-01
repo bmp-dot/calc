@@ -7,7 +7,7 @@ export default function CalculatorApp() {
   const [fourKDrivers, setFourKDrivers] = useState('');
   const [numFourKDrives, setNumFourKDrives] = useState('');
   const [parity, setParity] = useState('');
-  const [spare, setSpare] = useState('1');
+  const [spare, setSpare] = useState('');
   const [failureDomain, setFailureDomain] = useState('');
   const [hostFailures, setHostFailures] = useState('');
   const [result, setResult] = useState(null);
