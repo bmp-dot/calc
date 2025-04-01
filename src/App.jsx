@@ -33,11 +33,11 @@ export default function CalculatorApp() {
     const hostFailuresValue = parseInt(hostFailures) || 0;
     const failureDomainValue = parseInt(failureDomain) || 0;
 
-    const totalDrives = servers * nvme;
+   const totalDrives = (servers * nvme) + (servers * fourKDrivesCount);
 
     let rawTotalCapacity = 0;
     if (totalDrives > 0 && size > 0) {
-      rawTotalCapacity = (totalDrives * size) + (fourKDrivesCount * servers * fourKSize); // Add 4k capacity on top
+      rawTotalCapacity = (servers * nvme * size) + (fourKDrivesCount * servers * fourKSize);
     }
 
     if (servers > 0 && nvme > 0 && size > 0 && hostFailuresValue >= 0) {
