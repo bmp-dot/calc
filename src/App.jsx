@@ -7,7 +7,7 @@ export default function CalculatorApp() {
   const [fourKDrivers, setFourKDrivers] = useState('');
   const [numFourKDrives, setNumFourKDrives] = useState('');
   const [parity, setParity] = useState('');
-  const [spare, setSpare] = useState('');
+  const [spare, setSpare] = useState('1');
   const [failureDomain, setFailureDomain] = useState('');
   const [hostFailures, setHostFailures] = useState('');
   const [result, setResult] = useState(null);
@@ -17,7 +17,6 @@ export default function CalculatorApp() {
   const [backendsPerDomain, setBackendsPerDomain] = useState(null);
   const [failureDomainUsable, setFailureDomainUsable] = useState(null);
   const [capacityToRecover, setCapacityToRecover] = useState(null);
-
 
   useEffect(() => {
     const servers = parseInt(numServers) || 0;
@@ -107,118 +106,136 @@ export default function CalculatorApp() {
         <h2 className="text-xl font-bold mb-4 text-purple-300">Capacity Calculator</h2>
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex flex-col space-y-4 w-full lg:w-1/2">
-            <input
-              type="number"
-              value={numServers}
-              onChange={(e) => setNumServers(e.target.value)}
-              placeholder="# BE hosts"
-              className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              min="0"
-            />
-            <input
-              type="number"
-              value={numNVMe}
-              onChange={(e) => setNumNVMe(e.target.value)}
-              placeholder="# NVMe per BE"
-              className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              min="0"
-            />
-            <select
-              value={nvmeSize}
-              onChange={(e) => {
-                setNvmeSize(e.target.value);
-                if (parseFloat(e.target.value) <= 31) {
-                  setFourKDrivers('');
-                  setNumFourKDrives('');
-                }
-              }}
-              className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
-            >
-              <option value="">Select NVMe Size</option>
-              {[1.92, 3.84, 7.68, 15.36, 30.72, 61.44, 122.88].map((size) => (
-                <option key={size} value={size}>{size} TB</option>
-              ))}
-            </select>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Number of BE Hosts</label>
+              <input
+                type="number"
+                value={numServers}
+                onChange={(e) => setNumServers(e.target.value)}
+                placeholder="# BE hosts"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                min="0"
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">NVMe Drives per BE</label>
+              <input
+                type="number"
+                value={numNVMe}
+                onChange={(e) => setNumNVMe(e.target.value)}
+                placeholder="# NVMe per BE"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                min="0"
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">NVMe Size</label>
+              <select
+                value={nvmeSize}
+                onChange={(e) => {
+                  setNvmeSize(e.target.value);
+                  if (parseFloat(e.target.value) <= 31) {
+                    setFourKDrivers('');
+                    setNumFourKDrives('');
+                  }
+                }}
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+              >
+                <option value="">Select NVMe Size</option>
+                {[1.92, 3.84, 7.68, 15.36, 30.72, 61.44, 122.88].map((size) => (
+                  <option key={size} value={size}>{size} TB</option>
+                ))}
+              </select>
+            </div>
             {parseFloat(nvmeSize) > 31 && (
               <>
-                <select
-                  value={fourKDrivers}
-                  onChange={(e) => setFourKDrivers(e.target.value)}
-                  className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
-                >
-                  <option value="">Select 4k NVMe Size</option>
-                  {[1.6, 3.2, 6.4, 12.8, 25.6].map((size) => (
-                    <option key={size} value={size}>{size} TB</option>
-                  ))}
-                </select>
-                <input
-                  type="number"
-                  value={numFourKDrives}
-                  readOnly
-                  placeholder="# 4k Drives per Server (auto-calculated)"
-                  className="p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                />
+                <div>
+                  <label className="block text-sm mb-1 text-gray-300">4K NVMe Size</label>
+                  <select
+                    value={fourKDrivers}
+                    onChange={(e) => setFourKDrivers(e.target.value)}
+                    className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+                  >
+                    <option value="">Select 4k NVMe Size</option>
+                    {[1.6, 3.2, 6.4, 12.8, 25.6].map((size) => (
+                      <option key={size} value={size}>{size} TB</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm mb-1 text-gray-300">4K Drives per BE</label>
+                  <input
+                    type="number"
+                    value={numFourKDrives}
+                    readOnly
+                    placeholder="# 4k Drives per Server (auto-calculated)"
+                    className="w-full p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  />
+                </div>
               </>
             )}
-            <input
-              type="number"
-              value={parity ? Math.min(16, (parseInt(numServers) || 0) - parseInt(parity) - 1) : ''}
-              readOnly
-              placeholder="Data Stripe (auto-calculated)"
-              className="p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            />
-            <select
-              value={parity}
-              onChange={(e) => setParity(e.target.value)}
-              className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
-            >
-              <option value="">Protection Level</option>
-              {[2, 3, 4].map((p) => (
-                <option key={p} value={p}>Protection Level +{p}</option>
-              ))}
-            </select>
-            <select
-              value={failureDomain}
-              onChange={(e) => setFailureDomain(e.target.value)}
-              className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
-            >
-              <option value=""># of Failure Domains</option>
-              {(() => {
-                const options = [];
-                const num = parseInt(numServers) || 0;
-                if (num > 0) {
-                  for (let div = 1; div <= num; div++) {
-                    if (num % div === 0) {
-                      const value = num / div;
-                      if (value < 19) continue;
-                      if (value > 0 && !options.includes(value)) {
-                        options.push(value);
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Data Stripe</label>
+              <input
+                type="number"
+                value={parity ? Math.min(16, (parseInt(numServers) || 0) - parseInt(parity) - 1) : ''}
+                readOnly
+                placeholder="Data Stripe (auto-calculated)"
+                className="w-full p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Protection Level</label>
+              <select
+                value={parity}
+                onChange={(e) => setParity(e.target.value)}
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+              >
+                <option value="">Protection Level</option>
+                {[2, 3, 4].map((p) => (
+                  <option key={p} value={p}>+{p}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Number of Failure Domains</label>
+              <select
+                value={failureDomain}
+                onChange={(e) => setFailureDomain(e.target.value)}
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+              >
+                <option value=""># of Failure Domains</option>
+                {(() => {
+                  const options = [];
+                  const num = parseInt(numServers) || 0;
+                  if (num > 0) {
+                    for (let div = 1; div <= num; div++) {
+                      if (num % div === 0) {
+                        const value = num / div;
+                        if (value < 19) continue;
+                        if (value > 0 && !options.includes(value)) {
+                          options.push(value);
+                        }
                       }
                     }
                   }
-                }
-                return options.map((val) => (
-                  <option key={val} value={val}>{val} Failure Domains</option>
-                ));
-              })()}
-            </select>
-          
-            
-            
-
-
-            
-       
-            <input
-              type="number"
-             value={spare}
-              onChange={(e) => setSpare(e.target.value)}
-              placeholder="Virtual Hot Spare"
-              className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              min="0"
-            />
-          
-          
+                  return options.map((val) => (
+                    <option key={val} value={val}>{val}</option>
+                  ));
+                })()}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Virtual Hot Spare</label>
+              <input
+                type="number"
+                value={spare}
+                onChange={(e) => setSpare(e.target.value)}
+                placeholder="Virtual Hot Spare"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                min="0"
+              />
+            </div>
           </div>
           <div className="flex flex-col space-y-4 w-full lg:w-1/2 bg-gray-800 border border-purple-500 p-4 rounded-lg text-purple-300">
             {rawTotal && <p className="text-lg">{rawTotal}</p>}
