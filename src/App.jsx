@@ -205,14 +205,9 @@ export default function CalculatorApp() {
           
             
             
-//            <input
-//              type="number"
-//             value={spare}
-//              onChange={(e) => setSpare(e.target.value)}
-//              placeholder="Virtual Hot Spare"
-//              className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-//              min="0"
-//            />
+
+
+            
        
             <div className="flex flex-col space-y-2">
               {/* Hidden input for editing and calculations */}
