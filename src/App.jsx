@@ -17,6 +17,7 @@ export default function CalculatorApp() {
   const [backendsPerDomain, setBackendsPerDomain] = useState(null);
   const [failureDomainUsable, setFailureDomainUsable] = useState(null);
   const [capacityToRecover, setCapacityToRecover] = useState(null);
+  const [spare, setSpare] = useState('1'); // Changed from '' to '1'
 
   useEffect(() => {
     const servers = parseInt(numServers) || 0;
@@ -201,14 +202,35 @@ export default function CalculatorApp() {
                 ));
               })()}
             </select>
-            <input
-              type="number"
-              value={spare}
-              onChange={(e) => setSpare(e.target.value)}
-              placeholder="Virtual Hot Spare"
-              className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              min="0"
-            />
+          
+            
+            
+//            <input
+//              type="number"
+//             value={spare}
+//              onChange={(e) => setSpare(e.target.value)}
+//              placeholder="Virtual Hot Spare"
+//              className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+//              min="0"
+//            />
+       
+            <div className="flex flex-col space-y-2">
+              {/* Hidden input for editing and calculations */}
+              <input
+                type="number"
+                value={spare}
+                onChange={(e) => setSpare(e.target.value)}
+                className="hidden"
+                min="0"
+              />
+              {/* Visible formatted display */}
+              <div className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white">
+                {spare ? `${spare} Virtual Hot Spare` : 'Virtual Hot Spare'}
+              </div>
+            </div>
+                      
+          
+          
           </div>
           <div className="flex flex-col space-y-4 w-full lg:w-1/2 bg-gray-800 border border-purple-500 p-4 rounded-lg text-purple-300">
             {rawTotal && <p className="text-lg">{rawTotal}</p>}
