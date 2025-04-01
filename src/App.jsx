@@ -163,7 +163,7 @@ export default function CalculatorApp() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm mb-1 text-gray-300">4K Drives per Server</label>
+                  <label className="block text-sm mb-1 text-gray-300">4K Drives per BE</label>
                   <input
                     type="number"
                     value={numFourKDrives}
