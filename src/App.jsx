@@ -108,7 +108,18 @@ export default function CalculatorApp() {
         <h2 className="text-xl font-bold mb-4 text-[#7A1FA2]">Capacity Calculator</h2>
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex flex-col space-y-4 w-full lg:w-1/2">
-            <input type="number" value={numServers} onChange={(e) => setNumServers(e.target.value)} placeholder="# BE hosts" className="p-2 border rounded-lg" min="0" />
+                        
+            <input 
+              type="number"
+              value={numServers} 
+              onChange={(e) => setNumServers(e.target.value)} 
+              placeholder="# BE hosts" 
+              className="p-2 border rounded-lg appearance-none" // Add 'appearance-none' here
+              min="6" 
+            />
+
+
+
             <input type="number" value={numNVMe} onChange={(e) => setNumNVMe(e.target.value)} placeholder="# NVMe per BE" className="p-2 border rounded-lg" min="0" />
             <select value={nvmeSize} onChange={(e) => { setNvmeSize(e.target.value); if (parseFloat(e.target.value) <= 31) { setFourKDrivers(''); setNumFourKDrives(''); } }} className="p-2 border rounded-lg">
               <option value="">Select NVMe Size</option>
