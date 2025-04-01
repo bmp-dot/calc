@@ -7,7 +7,7 @@ export default function CalculatorApp() {
   const [fourKDrivers, setFourKDrivers] = useState('');
   const [numFourKDrives, setNumFourKDrives] = useState('');
   const [parity, setParity] = useState('');
-  const [spare, setSpare] = useState('');
+  const [spare, setSpare] = useState('1');
   const [failureDomain, setFailureDomain] = useState('');
   const [hostFailures, setHostFailures] = useState('');
   const [result, setResult] = useState(null);
@@ -193,7 +193,7 @@ export default function CalculatorApp() {
               >
                 <option value="">Protection Level</option>
                 {[2, 3, 4].map((p) => (
-                  <option key={p} value={p}>Protection Level +{p}</option>
+                  <option key={p} value={p}>+{p}</option>
                 ))}
               </select>
             </div>
@@ -220,7 +220,7 @@ export default function CalculatorApp() {
                     }
                   }
                   return options.map((val) => (
-                    <option key={val} value={val}>{val} Failure Domains</option>
+                    <option key={val} value={val}>{val}</option>
                   ));
                 })()}
               </select>
