@@ -119,7 +119,7 @@ export default function CalculatorApp() {
             {parseFloat(nvmeSize) > 31 && (
               <>
                 <select value={fourKDrivers} onChange={(e) => setFourKDrivers(e.target.value)} className="p-2 border rounded-lg">
-                  <option value="">Select 4k Drivers Size</option>
+                  <option value="">Select 4k Drives Size</option>
                   {[1.92, 3.84, 7.68, 15.36].map((size) => (
                     <option key={size} value={size}>{size} TB</option>
                   ))}
