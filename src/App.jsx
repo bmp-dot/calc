@@ -114,14 +114,23 @@ export default function CalculatorApp() {
               value={numServers} 
               onChange={(e) => setNumServers(e.target.value)} 
               placeholder="# BE hosts" 
-              className="p-2 border rounded-lg appearance-none" // Add 'appearance-none' here
-              min="6" 
+              className="p-2 border rounded-lg appearance-none" //don't show arrow on number input
+              min="0" 
             />
 
-
-
-            <input type="number" value={numNVMe} onChange={(e) => setNumNVMe(e.target.value)} placeholder="# NVMe per BE" className="p-2 border rounded-lg" min="0" />
-            <select value={nvmeSize} onChange={(e) => { setNvmeSize(e.target.value); if (parseFloat(e.target.value) <= 31) { setFourKDrivers(''); setNumFourKDrives(''); } }} className="p-2 border rounded-lg">
+            <input 
+              type="number" 
+              value={numNVMe} 
+              onChange={(e) => setNumNVMe(e.target.value)} 
+              placeholder="# NVMe per BE" 
+              className="p-2 border rounded-lg appearance-none" //don't show arrow on number input
+              min="0" 
+            />
+            
+            <select 
+              value={nvmeSize} 
+              onChange={(e) => { setNvmeSize(e.target.value); if (parseFloat(e.target.value) <= 31) { setFourKDrivers(''); setNumFourKDrives(''); } }} 
+              className="p-2 border rounded-lg">
               <option value="">Select NVMe Size</option>
               {[1.92, 3.84, 7.68, 15.36, 30.72, 61.44, 122.88].map((size) => (
                 <option key={size} value={size}>{size} TB</option>
