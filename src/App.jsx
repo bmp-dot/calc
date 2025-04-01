@@ -18,6 +18,7 @@ export default function CalculatorApp() {
   const [failureDomainUsable, setFailureDomainUsable] = useState(null);
   const [capacityToRecover, setCapacityToRecover] = useState(null);
 
+
   useEffect(() => {
     const servers = parseInt(numServers) || 0;
     const nvme = parseInt(numNVMe) || 0;
@@ -173,7 +174,7 @@ export default function CalculatorApp() {
             >
               <option value="">Protection Level</option>
               {[2, 3, 4].map((p) => (
-                <option key={p} value={p}>+{p}</option>
+                <option key={p} value={p}>Protection Level +{p}</option>
               ))}
             </select>
             <select
@@ -197,18 +198,27 @@ export default function CalculatorApp() {
                   }
                 }
                 return options.map((val) => (
-                  <option key={val} value={val}>{val}</option>
+                  <option key={val} value={val}>{val} Failure Domains</option>
                 ));
               })()}
             </select>
+          
+            
+            
+
+
+            
+       
             <input
               type="number"
-              value={spare}
+             value={spare}
               onChange={(e) => setSpare(e.target.value)}
               placeholder="Virtual Hot Spare"
               className="p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               min="0"
             />
+          
+          
           </div>
           <div className="flex flex-col space-y-4 w-full lg:w-1/2 bg-gray-800 border border-purple-500 p-4 rounded-lg text-purple-300">
             {rawTotal && <p className="text-lg">{rawTotal}</p>}
