@@ -197,7 +197,7 @@ export default function CalculatorApp() {
                   }
                 }
                 return options.map((val) => (
-                  <option key={val} value={val}>{val}</option>
+                  <option key={val} value={val}>{val} Failure Domains</option>
                 ));
               })()}
             </select>
