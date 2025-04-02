@@ -212,7 +212,7 @@ export default function CalculatorApp() {
                     for (let div = 1; div <= num; div++) {
                       if (num % div === 0) {
                         const value = num / div;
-                        if (value < 19) continue;
+                        if (value < 6) continue;
                         if (value > 0 && !options.includes(value)) {
                           options.push(value);
                         }
