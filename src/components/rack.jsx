@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function RackCalculator() {
   const [totalServers, setTotalServers] = useState(0);
