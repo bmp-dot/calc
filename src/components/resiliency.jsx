@@ -246,13 +246,18 @@ export default function CalculatorApp() {
             className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
           />
         </div>
+        <div>
+        <label className="block text-sm mb-1 text-gray-300">Capacity to Recover</label>
           <input
             type="text"
             value={failureDomainUsable ? failureDomainUsable.split(': ')[1] : ''}
             readOnly
-            placeholder="Failure Domain Usable Capacity"
+            placeholder="Capacity to Recover"
             className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg cursor-not-allowed"
           />
+          </div>
+          <div>
+          <label className="block text-sm mb-1 text-gray-300">Number of FD Failures</label>
           <select
             className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
           >
@@ -261,7 +266,7 @@ export default function CalculatorApp() {
               <option key={n} value={n}>{n}</option>
             ))}
           </select>
-
+          </div>
             
 
 
