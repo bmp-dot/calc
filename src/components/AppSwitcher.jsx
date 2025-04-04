@@ -8,7 +8,7 @@ function AppSwitcher() {
   const handleTabClick = (tab) => setActiveTab(tab);
 
   return (
-    <div className="tab-container">
+    <div className="tab-container bg-gray-900 min-h-screen p-4 sm:p-8"> {/* Set to bg-gray-900 */}
       <div className="tab-buttons">
         <button
           className={`tab-button ${activeTab === 'Capacity' ? 'active' : ''}`}
