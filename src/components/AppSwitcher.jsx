@@ -14,7 +14,7 @@ function AppSwitcher() {
           className={`tab-button ${activeTab === 'Capacity' ? 'active' : ''}`}
           onClick={() => handleTabClick('Capacity')}
         >
-          Calculator
+          Capacity
         </button>
         <button
           className={`tab-button ${activeTab === 'Rack' ? 'active' : ''}`}
