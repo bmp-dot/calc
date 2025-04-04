@@ -29,7 +29,7 @@ export default function RackCalculator() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white p-4 sm:p-8">
       <div className="border border-gray-700 rounded-lg shadow-md p-6 bg-gray-800 w-full max-w-xl mx-auto mb-8">
-        <h1 className="text-2xl font-bold mb-4 text-purple-300">Rack Layout Calculator</h1>
+        <h1 className="text-xl font-bold mb-4 text-purple-300">Rack Layout Calculator</h1>
 
         <div className="space-y-4">
           <label className="block">
