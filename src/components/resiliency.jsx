@@ -236,6 +236,35 @@ export default function CalculatorApp() {
                 min="0"
               />
             </div>
+
+
+
+          <input
+            type="text"
+            placeholder="Percent Full"
+            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
+          />
+          <input
+            type="text"
+            value={failureDomainUsable ? failureDomainUsable.split(': ')[1] : ''}
+            readOnly
+            placeholder="Failure Domain Usable Capacity"
+            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg cursor-not-allowed"
+          />
+          <select
+            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
+          >
+            <option value=""># FD Failures</option>
+            {[1, 2, 3, 4].filter(n => !parity || n <= parseInt(parity)).map(n => (
+              <option key={n} value={n}>{n}</option>
+            ))}
+          </select>
+
+            
+
+
+
+            
           </div>
           <div className="flex flex-col space-y-4 w-full lg:w-1/2 bg-gray-800 border border-purple-500 p-4 rounded-lg text-purple-300">
             {rawTotal && <p className="text-lg">{rawTotal}</p>}
