@@ -11,24 +11,24 @@ function AppSwitcher() {
     <div className="tab-container">
       <div className="tab-buttons">
         <button
-          className={`tab-button ${activeTab === 'calculator' ? 'active' : ''}`}
-          onClick={() => handleTabClick('calculator')}
+          className={`tab-button ${activeTab === 'Capacity' ? 'active' : ''}`}
+          onClick={() => handleTabClick('Capacity')}
         >
           Calculator
         </button>
         <button
-          className={`tab-button ${activeTab === 'other' ? 'active' : ''}`}
-          onClick={() => handleTabClick('other')}
+          className={`tab-button ${activeTab === 'Rack' ? 'active' : ''}`}
+          onClick={() => handleTabClick('Rack')}
         >
           Other App
         </button>
       </div>
       <div className="tab-content">
-        <div className={`tab-pane ${activeTab === 'calculator' ? 'active' : ''}`}>
+        <div className={`tab-pane ${activeTab === 'Capacity' ? 'active' : ''}`}>
           <CalculatorApp />
         </div>
-        <div className={`tab-pane ${activeTab === 'other' ? 'active' : ''}`}>
-          <OtherApp />
+        <div className={`tab-pane ${activeTab === 'Racks' ? 'active' : ''}`}>
+          <RackCalculator />
         </div>
       </div>
     </div>
