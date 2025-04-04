@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #111827; /* match app color */
+  background-color: #111827; /* match app color tailwinds bg-gray-900  */
 }
 .tab-buttons {
   display: flex;
