@@ -88,7 +88,23 @@ export default function CalculatorApp() {
       <div className="border border-gray-700 rounded-lg shadow-md p-6 bg-gray-800 w-full max-w-4xl mx-auto mb-8">
         <h1 className="text-xl font-bold mb-4 text-purple-300">Resiliency Calculator</h1>
         <div className="space-y-4">
-   
+
+
+
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Number of BE Hosts</label>
+              <input
+                type="number"
+                value={numServers}
+                onChange={(e) => setNumServers(e.target.value)}
+                placeholder="# BE hosts"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                min="0"
+              />
+            </div>
+
+
+          
           
           <input
             type="text"
