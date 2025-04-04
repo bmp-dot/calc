@@ -31,7 +31,6 @@ function AppSwitcher() {
             Rack
           </button>
           
-          </button>
           <button
             className={`tab-button ${activeTab === 'Resiliency' ? 'active' : ''}`}
             onClick={() => setActiveTab('Resiliency')}
