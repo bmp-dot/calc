@@ -175,7 +175,7 @@ export default function RackCalculator() {
                 setRuPerRack('');
                 setShowDistribution(false);
               }}
-              className="reset-button"
+              className="tab-button.active"
             >
               Reset
             </button>
