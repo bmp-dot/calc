@@ -12,20 +12,24 @@ function AppSwitcher() {
 
   return (
     <div className="tab-container bg-gray-900 min-h-screen p-4 sm:p-8">
-      <div className="tab-buttons">
-        <button
-          className={`tab-button ${activeTab === 'Capacity' ? 'active' : ''}`}
-          onClick={() => setActiveTab('Capacity')}
-        >
-          Capacity
-        </button>
-        <button
-          className={`tab-button ${activeTab === 'Rack' ? 'active' : ''}`}
-          onClick={() => setActiveTab('Rack')}
-        >
-          Rack
-        </button>
-      </div>
+      
+      {/* ✅ Wrap the buttons in AppLayout */}
+      <AppLayout>
+        <div className="tab-buttons mb-6">
+          <button
+            className={`tab-button ${activeTab === 'Capacity' ? 'active' : ''}`}
+            onClick={() => setActiveTab('Capacity')}
+          >
+            Capacity
+          </button>
+          <button
+            className={`tab-button ${activeTab === 'Rack' ? 'active' : ''}`}
+            onClick={() => setActiveTab('Rack')}
+          >
+            Rack
+          </button>
+        </div>
+      </AppLayout>
 
       <AppLayout>
         {activeTab === 'Capacity' && <CalculatorApp />}
