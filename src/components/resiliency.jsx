@@ -237,7 +237,7 @@ export default function CalculatorApp() {
               />
             </div>
 
-
+    <h2 className="text-xl font-bold mb-4 text-purple-300">Fault Simulations</h2>
 
           <input
             type="text"
