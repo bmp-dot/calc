@@ -29,3 +29,4 @@ function AppSwitcher() {
     </div>
   );
 }
+export default AppSwitcher;
