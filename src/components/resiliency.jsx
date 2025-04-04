@@ -80,12 +80,15 @@ export default function CalculatorApp() {
   }, [numServers, numNVMe, nvmeSize, data, parity, spare, failureDomain]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 p-4 sm:p-8">
 
       {/* Resiliency Calculator Section */}
-      <div className="mt-12 border border-gray-300 rounded-lg shadow-md p-6 bg-white w-full max-w-4xl mx-auto">
-        <h2 className="text-xl font-bold mb-4 text-[#7A1FA2]">Resiliency Calculator</h2>
-        <div className="flex flex-col space-y-4 w-full lg:w-1/2">
+          
+
+    <div className="flex flex-col min-h-screen bg-gray-900 text-white p-4 sm:p-8">
+      <div className="border border-gray-700 rounded-lg shadow-md p-6 bg-gray-800 w-full max-w-4xl mx-auto mb-8">
+        <h1 className="text-xl font-bold mb-4 text-purple-300">Resiliency Calculator</h1>
+        <div className="space-y-4">
+   
           
           <input
             type="text"
