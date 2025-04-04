@@ -4,121 +4,247 @@ export default function CalculatorApp() {
   const [numServers, setNumServers] = useState('');
   const [numNVMe, setNumNVMe] = useState('');
   const [nvmeSize, setNvmeSize] = useState('');
-  const [data, setData] = useState('');
+  const [fourKDrivers, setFourKDrivers] = useState('');
+  const [numFourKDrives, setNumFourKDrives] = useState('');
   const [parity, setParity] = useState('');
-  const [spare, setSpare] = useState('');
+  const [spare, setSpare] = useState('1');
   const [failureDomain, setFailureDomain] = useState('');
+  const [hostFailures, setHostFailures] = useState('');
   const [result, setResult] = useState(null);
   const [rawTotal, setRawTotal] = useState(null);
   const [usableCapacity, setUsableCapacity] = useState(null);
   const [efficiency, setEfficiency] = useState(null);
   const [backendsPerDomain, setBackendsPerDomain] = useState(null);
   const [failureDomainUsable, setFailureDomainUsable] = useState(null);
+  const [capacityToRecover, setCapacityToRecover] = useState(null);
 
   useEffect(() => {
-    const serversNum = parseFloat(numServers);
-    const parityNum = parseFloat(parity);
-    if (!isNaN(serversNum) && !isNaN(parityNum)) {
-      const computedData = Math.min(16, serversNum - parityNum - 1);
-      setData(!isNaN(computedData) && computedData > 0 ? computedData.toString() : '');
+    const servers = parseInt(numServers) || 0;
+    const nvme = parseInt(numNVMe) || 0;
+    const size = parseFloat(nvmeSize) || 0;
+    const fourKSize = parseFloat(fourKDrivers) || 0;
+
+    const fourKDrivesCount = size > 31 && fourKSize > 0 && nvme > 0 ? Math.max(Math.ceil(nvme / 11), 1) : 0;
+    setNumFourKDrives(fourKDrivesCount > 0 ? fourKDrivesCount.toString() : '');
+
+    const parityValue = parseInt(parity) || 0;
+    const spareValue = parseInt(spare) || 0;
+    const hostFailuresValue = parseInt(hostFailures) || 0;
+    const failureDomainValue = parseInt(failureDomain) || 0;
+
+    const totalDrives = (servers * nvme) + (servers * fourKDrivesCount);
+
+    let rawTotalCapacity = 0;
+    if (totalDrives > 0 && size > 0) {
+      rawTotalCapacity = (servers * nvme * size) + (fourKDrivesCount * servers * fourKSize);
     }
 
-    const servers = parseFloat(numServers);
-    const nvme = parseFloat(numNVMe);
-    const size = parseFloat(nvmeSize);
-    const parityValue = parseFloat(parity);
-    const dataValue = Math.min(16, servers - parityValue - 1);
-    const spareValue = parseFloat(spare);
-
-    let totalDrives = null;
-    let rawTotalCapacity = null;
-    let totalUsableCapacity = null;
-    let efficiencyValue = null;
-
-    if (!isNaN(servers) && !isNaN(nvme)) {
-      totalDrives = servers * nvme;
+    if (servers > 0 && nvme > 0 && size > 0 && hostFailuresValue >= 0) {
+      const recoveryCapacity = nvme * size * hostFailuresValue * ((servers - spareValue) / servers) * 0.9;
+      setCapacityToRecover(
+        `Capacity to Recover (TB): ${recoveryCapacity.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+      );
+    } else {
+      setCapacityToRecover(null);
     }
 
-    if (!isNaN(servers) && !isNaN(nvme) && !isNaN(size)) {
-      rawTotalCapacity = servers * nvme * size;
-    }
+    const dataValue = servers > parityValue ? Math.min(16, servers - parityValue - 1) : 0;
+    let totalUsableCapacity = 0;
 
-    if (
-      !isNaN(rawTotalCapacity) &&
-      !isNaN(servers) &&
-      !isNaN(spareValue) &&
-      !isNaN(dataValue) &&
-      !isNaN(parityValue) &&
-      (dataValue + parityValue) !== 0
-    ) {
+    let efficiencyFactor = 0.9;
+    if (rawTotalCapacity >= 200000) efficiencyFactor = 0.97;
+    else if (rawTotalCapacity >= 150000) efficiencyFactor = 0.96;
+    else if (rawTotalCapacity >= 100000) efficiencyFactor = 0.95;
+    else if (rawTotalCapacity >= 50000) efficiencyFactor = 0.94;
+    else if (rawTotalCapacity >= 5000) efficiencyFactor = 0.93;
+    else if (rawTotalCapacity >= 1000) efficiencyFactor = 0.92;
+
+    if (servers > spareValue && dataValue + parityValue > 0) {
       totalUsableCapacity =
-        rawTotalCapacity * ((servers - spareValue) / servers) * (dataValue / (dataValue + parityValue)) * 0.9;
+        rawTotalCapacity * ((servers - spareValue) / servers) * (dataValue / (dataValue + parityValue)) * efficiencyFactor;
     }
 
-    if (!isNaN(totalUsableCapacity) && !isNaN(rawTotalCapacity) && rawTotalCapacity !== 0) {
-      efficiencyValue = totalUsableCapacity / rawTotalCapacity;
-    }
+    const efficiencyValue = rawTotalCapacity > 0 ? totalUsableCapacity / rawTotalCapacity : 0;
 
-    setResult(totalDrives !== null ? `Total Number of drives: ${totalDrives.toLocaleString()}` : null);
-    setRawTotal(rawTotalCapacity !== null ? `Total Raw Capacity TB: ${rawTotalCapacity.toLocaleString()}` : null);
-    setUsableCapacity(totalUsableCapacity !== null ? `Total Usable Capacity TB: ${totalUsableCapacity.toLocaleString()}` : null);
-    setEfficiency(efficiencyValue !== null ? `Efficiency: ${(efficiencyValue * 100).toFixed(2)}%` : null);
-    const failureDomainValue = parseInt(failureDomain);
-    if (!isNaN(failureDomainValue) && !isNaN(servers) && failureDomainValue !== 0) {
+    setResult(totalDrives > 0 ? `Total Number of drives: ${totalDrives.toLocaleString()}` : null);
+    setRawTotal(
+      rawTotalCapacity > 0
+        ? `Total Raw Capacity TB: ${rawTotalCapacity.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+        : null
+    );
+    setUsableCapacity(
+      totalUsableCapacity > 0
+        ? `Total Usable Capacity TB: ${totalUsableCapacity.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+        : null
+    );
+    setEfficiency(
+      efficiencyValue > 0
+        ? `Efficiency: ${(efficiencyValue * 100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%`
+        : null
+    );
+
+    if (failureDomainValue > 0 && servers > 0) {
       const perDomain = servers / failureDomainValue;
-      if (!isNaN(totalUsableCapacity)) {
-        const usablePerDomain = totalUsableCapacity / failureDomainValue;
-        setFailureDomainUsable(`Failure Domain Usable Capacity: ${usablePerDomain.toLocaleString(undefined, { maximumFractionDigits: 2 })}`);
-      }
-      setBackendsPerDomain(`Backends per Failure Domain: ${perDomain.toFixed(2)}`);
+      const usablePerDomain = totalUsableCapacity / failureDomainValue;
+      setBackendsPerDomain(
+        `Backends per Failure Domain: ${perDomain.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+      );
+      setFailureDomainUsable(
+        usablePerDomain > 0
+          ? `Failure Domain Usable Capacity TB: ${usablePerDomain.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+          : null
+      );
     } else {
       setBackendsPerDomain(null);
+      setFailureDomainUsable(null);
     }
-  }, [numServers, numNVMe, nvmeSize, data, parity, spare, failureDomain]);
+  }, [numServers, numNVMe, nvmeSize, fourKDrivers, parity, spare, failureDomain, hostFailures]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white p-4 sm:p-8">
-      {/* Resiliency Calculator Section */}
       <div className="border border-gray-700 rounded-lg shadow-md p-6 bg-gray-800 w-full max-w-4xl mx-auto mb-8">
-        <h1 className="text-xl font-bold mb-4 text-purple-300">Resiliency Calculator</h1>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm mb-1 text-gray-300">Number of BE Hosts</label>
-            <input
-              type="number"
-              value={numServers}
-              onChange={(e) => setNumServers(e.target.value)}
-              placeholder="# BE hosts"
-              className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              min="0"
-            />
+        <h2 className="text-xl font-bold mb-4 text-purple-300">Capacity Calculator</h2>
+        <div className="flex flex-col lg:flex-row gap-6">
+          <div className="flex flex-col space-y-4 w-full lg:w-1/2">
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Number of BE Hosts</label>
+              <input
+                type="number"
+                value={numServers}
+                onChange={(e) => setNumServers(e.target.value)}
+                placeholder="# BE hosts"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                min="0"
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">NVMe Drives per BE</label>
+              <input
+                type="number"
+                value={numNVMe}
+                onChange={(e) => setNumNVMe(e.target.value)}
+                placeholder="# NVMe per BE"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                min="0"
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">NVMe Size</label>
+              <select
+                value={nvmeSize}
+                onChange={(e) => {
+                  setNvmeSize(e.target.value);
+                  if (parseFloat(e.target.value) <= 31) {
+                    setFourKDrivers('');
+                    setNumFourKDrives('');
+                  }
+                }}
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+              >
+                <option value="">Select NVMe Size</option>
+                {[1.92, 3.84, 7.68, 15.36, 30.72, 61.44, 122.88].map((size) => (
+                  <option key={size} value={size}>{size} TB</option>
+                ))}
+              </select>
+            </div>
+            {parseFloat(nvmeSize) > 31 && (
+              <>
+                <div>
+                  <label className="block text-sm mb-1 text-gray-300">4K NVMe Size</label>
+                  <select
+                    value={fourKDrivers}
+                    onChange={(e) => setFourKDrivers(e.target.value)}
+                    className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+                  >
+                    <option value="">Select 4k NVMe Size</option>
+                    {[1.6, 3.2, 6.4, 12.8, 25.6].map((size) => (
+                      <option key={size} value={size}>{size} TB</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm mb-1 text-gray-300">4K Drives per BE</label>
+                  <input
+                    type="number"
+                    value={numFourKDrives}
+                    readOnly
+                    placeholder="# 4k Drives per Server (auto-calculated)"
+                    className="w-full p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  />
+                </div>
+              </>
+            )}
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Data Stripe</label>
+              <input
+                type="number"
+                value={parity ? Math.min(16, (parseInt(numServers) || 0) - parseInt(parity) - 1) : ''}
+                readOnly
+                placeholder="Data Stripe (auto-calculated)"
+                className="w-full p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Protection Level</label>
+              <select
+                value={parity}
+                onChange={(e) => setParity(e.target.value)}
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+              >
+                <option value="">Protection Level</option>
+                {[2, 3, 4].map((p) => (
+                  <option key={p} value={p}>+{p}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Number of Failure Domains</label>
+              <select
+                value={failureDomain}
+                onChange={(e) => setFailureDomain(e.target.value)}
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
+              >
+                <option value=""># of Failure Domains</option>
+                {(() => {
+                  const options = [];
+                  const num = parseInt(numServers) || 0;
+                  if (num > 0) {
+                    for (let div = 1; div <= num; div++) {
+                      if (num % div === 0) {
+                        const value = num / div;
+                        if (value < 6) continue;
+                        if (value > 0 && !options.includes(value)) {
+                          options.push(value);
+                        }
+                      }
+                    }
+                  }
+                  return options.map((val) => (
+                    <option key={val} value={val}>{val}</option>
+                  ));
+                })()}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm mb-1 text-gray-300">Virtual Hot Spare</label>
+              <input
+                type="number"
+                value={spare}
+                onChange={(e) => setSpare(e.target.value)}
+                placeholder="Virtual Hot Spare"
+                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                min="0"
+              />
+            </div>
           </div>
-
-          <input
-            type="text"
-            placeholder="# Compute Cores per BE"
-            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
-          />
-          <input
-            type="text"
-            placeholder="Percent Full"
-            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
-          />
-          <input
-            type="text"
-            value={failureDomainUsable ? failureDomainUsable.split(': ')[1] : ''}
-            readOnly
-            placeholder="Failure Domain Usable Capacity"
-            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg cursor-not-allowed"
-          />
-          <select
-            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
-          >
-            <option value=""># FD Failures</option>
-            {[1, 2, 3, 4].filter(n => !parity || n <= parseInt(parity)).map(n => (
-              <option key={n} value={n}>{n}</option>
-            ))}
-          </select>
+          <div className="flex flex-col space-y-4 w-full lg:w-1/2 bg-gray-800 border border-purple-500 p-4 rounded-lg text-purple-300">
+            {rawTotal && <p className="text-lg">{rawTotal}</p>}
+            {usableCapacity && <p className="text-lg">{usableCapacity}</p>}
+            {result && <p className="text-lg">{result}</p>}
+            {efficiency && <p className="text-lg">{efficiency}</p>}
+            {backendsPerDomain && <p className="text-lg">{backendsPerDomain}</p>}
+            {failureDomainUsable && <p className="text-lg">{failureDomainUsable}</p>}
+          </div>
         </div>
       </div>
     </div>
