@@ -93,7 +93,7 @@ export default function RackCalculator() {
               onClick={() => setShowDistribution(!showDistribution)}
               className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
             >
-              {showDistribution ? 'Hide' : 'Show'} Server Distribution Across Racks
+              {showDistribution ? 'Hide' : 'Show'} Server Distribution
             </button>
 
             {showDistribution && (
