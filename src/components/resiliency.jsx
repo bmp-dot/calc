@@ -103,7 +103,7 @@ export default function CalculatorApp() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white p-4 sm:p-8">
       <div className="border border-gray-700 rounded-lg shadow-md p-6 bg-gray-800 w-full max-w-4xl mx-auto mb-8">
-        <h2 className="text-xl font-bold mb-4 text-purple-300">Capacity Calculator</h2>
+        <h2 className="text-xl font-bold mb-4 text-purple-300">Resiliency Calculator</h2>
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex flex-col space-y-4 w-full lg:w-1/2">
             <div>
