@@ -20,7 +20,7 @@ function AppSwitcher() {
           className={`tab-button ${activeTab === 'Rack' ? 'active' : ''}`}
           onClick={() => handleTabClick('Rack')}
         >
-          Other App
+          Rack
         </button>
       </div>
       <div className="tab-content">
