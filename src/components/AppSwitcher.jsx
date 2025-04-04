@@ -1,6 +1,6 @@
 import React from 'react';
-import CalculatorApp from './capacity.jsx';
-import RackCalculator from './racks.jsx';
+import CalculatorApp from './capacity';
+import RackCalculator from './racks';
 import '../styles/App.css';
 
 function AppSwitcher() {
