@@ -16,7 +16,6 @@ export default function CalculatorApp() {
   const [failureDomainUsable, setFailureDomainUsable] = useState(null);
 
   useEffect(() => {
-    // Automatically calculate Data Stripe using formula: IF(SUM(numServers - parity -1)>16,16,SUM(numServers - parity -1))
     const serversNum = parseFloat(numServers);
     const parityNum = parseFloat(parity);
     if (!isNaN(serversNum) && !isNaN(parityNum)) {
@@ -39,8 +38,6 @@ export default function CalculatorApp() {
     if (!isNaN(servers) && !isNaN(nvme)) {
       totalDrives = servers * nvme;
     }
-
-    
 
     if (!isNaN(servers) && !isNaN(nvme) && !isNaN(size)) {
       rawTotalCapacity = servers * nvme * size;
@@ -80,32 +77,23 @@ export default function CalculatorApp() {
   }, [numServers, numNVMe, nvmeSize, data, parity, spare, failureDomain]);
 
   return (
-
-      {/* Resiliency Calculator Section */}
-          
-
     <div className="flex flex-col min-h-screen bg-gray-900 text-white p-4 sm:p-8">
+      {/* Resiliency Calculator Section */}
       <div className="border border-gray-700 rounded-lg shadow-md p-6 bg-gray-800 w-full max-w-4xl mx-auto mb-8">
         <h1 className="text-xl font-bold mb-4 text-purple-300">Resiliency Calculator</h1>
         <div className="space-y-4">
+          <div>
+            <label className="block text-sm mb-1 text-gray-300">Number of BE Hosts</label>
+            <input
+              type="number"
+              value={numServers}
+              onChange={(e) => setNumServers(e.target.value)}
+              placeholder="# BE hosts"
+              className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              min="0"
+            />
+          </div>
 
-
-
-            <div>
-              <label className="block text-sm mb-1 text-gray-300">Number of BE Hosts</label>
-              <input
-                type="number"
-                value={numServers}
-                onChange={(e) => setNumServers(e.target.value)}
-                placeholder="# BE hosts"
-                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                min="0"
-              />
-            </div>
-
-
-          
-          
           <input
             type="text"
             placeholder="# Compute Cores per BE"
@@ -115,19 +103,16 @@ export default function CalculatorApp() {
             type="text"
             placeholder="Percent Full"
             className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
-            
           />
           <input
             type="text"
             value={failureDomainUsable ? failureDomainUsable.split(': ')[1] : ''}
             readOnly
             placeholder="Failure Domain Usable Capacity"
-            className="p-2 border rounded-lg bg-gray-200 cursor-not-allowed"
+            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg cursor-not-allowed"
           />
           <select
-             className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
-            
-            
+            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
           >
             <option value=""># FD Failures</option>
             {[1, 2, 3, 4].filter(n => !parity || n <= parseInt(parity)).map(n => (
@@ -139,4 +124,3 @@ export default function CalculatorApp() {
     </div>
   );
 }
-
