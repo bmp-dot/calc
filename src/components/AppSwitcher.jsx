@@ -13,7 +13,7 @@ function AppSwitcher() {
   return (
     <div className="tab-container bg-gray-900 min-h-screen p-4 sm:p-8">
       
-      {/* ✅ Wrap the buttons in AppLayout */}
+     
       <AppLayout>
         <div className="tab-buttons mb-6">
           <button
