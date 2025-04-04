@@ -78,8 +78,8 @@ export default function RackCalculator() {
           <p>Max Servers Per Rack: <strong>{maxServersPerRack}</strong></p>
           <p>Base Servers Per Rack: <strong>{baseServersPerRack}</strong></p>
           <p>Extra Distribution: <strong>{extraDistribution}</strong></p>
-          <p>RU Available Total: <strong>{ruAvailableTotal}</strong></p>
-          <p>Total RU Needed: <strong>{totalRUNeeded}</strong></p>
+          <p>Rack RU Available: <strong>{ruAvailableTotal}</strong></p>
+          <p>Rack RU Needed: <strong>{totalRUNeeded}</strong></p>
 
           <h3 className="text-lg font-semibold mt-4">Rack Count Summary:</h3>
           <ul className="list-disc ml-5">
