@@ -7,7 +7,7 @@ function AppSwitcher() {
   const [activeTab, setActiveTab] = React.useState('Capacity');
   const handleTabClick = (tab) => setActiveTab(tab);
   const AppLayout = ({ children }) => (
-  <div className="max-w-7xl mx-auto px-4">{children}</div>
+      <div className="max-w-7xl mx-auto px-4 border border-red-500">{children}</div>
 );
   
   return (
