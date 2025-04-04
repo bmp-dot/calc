@@ -74,7 +74,6 @@ export default function RackCalculator() {
         </div>
 
         <div className="mt-6 bg-gray-800 p-4 rounded-lg border border-purple-500 text-purple-300">
-          <h2 className="text-xl font-semibold">Results:</h2>
           <p>Max Servers Per Rack: <strong>{maxServersPerRack}</strong></p>
           <p>Base Servers Per Rack: <strong>{baseServersPerRack}</strong></p>
           <p>Extra Distribution: <strong>{extraDistribution}</strong></p>
