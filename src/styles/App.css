@@ -81,14 +81,18 @@
   padding: 0.5rem 1rem;
   border-radius: 9999px;
   transition: background-color 0.2s ease;
+}
 
 .distro-button {
-  color: white;
-  background: linear-gradient(to right, #7A1FA2, #9333ea);
-/*  border: 1px solid transparent; */
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
+  background-color: #374151;           /* bg-gray-700 */
+  color: white;                        /* text-white */
+  padding: 0.5rem 1rem;                /* py-2 px-4 */
   transition: background-color 0.2s ease;
+  cursor: pointer;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+}
 
-  
+.distro-button:hover {
+  background-color: #4b5563;           /* hover:bg-gray-600 */
 }
