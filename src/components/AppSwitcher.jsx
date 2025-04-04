@@ -1,6 +1,7 @@
 import React from 'react';
 import CalculatorApp from './capacity';
 import RackCalculator from './rack';
+import ResilCalculator from './resiliency';
 import '../styles/App.css';
 
 function AppSwitcher() {
@@ -22,18 +23,31 @@ function AppSwitcher() {
           >
             Capacity
           </button>
+          
           <button
             className={`tab-button ${activeTab === 'Rack' ? 'active' : ''}`}
             onClick={() => setActiveTab('Rack')}
           >
             Rack
           </button>
+          
+          </button>
+          <button
+            className={`tab-button ${activeTab === 'Resiliency' ? 'active' : ''}`}
+            onClick={() => setActiveTab('Resiliency')}
+          >
+            Resiliency
+          </button>
+
+
+          
         </div>
       </AppLayout>
 
       <AppLayout>
         {activeTab === 'Capacity' && <CalculatorApp />}
         {activeTab === 'Rack' && <RackCalculator />}
+        {activeTab === 'Resiliency' && <ResilCalculator />}
       </AppLayout>
     </div>
   );
