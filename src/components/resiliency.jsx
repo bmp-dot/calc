@@ -239,7 +239,7 @@ export default function CalculatorApp() {
 
     <h2 className="text-xl font-bold mb-4 text-purple-300">Fault Simulations</h2>
         <div>
-        <label className="block text-sm mb-1 text-gray-300">Percent Full/label></label>
+        <label className="block text-sm mb-1 text-gray-300">Percent Full</label>
           <input
             type="text"
             placeholder="Percent Full"
