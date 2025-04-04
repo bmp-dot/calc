@@ -132,19 +132,31 @@ export default function RackCalculator() {
           </ul>
 
           <h3 className="text-lg font-semibold mt-4">Even Distribution Suggestion:</h3>
-          {serversForEvenDistribution !== null ? (
-            <p>
-              To evenly distribute servers across all racks: <strong>{serversForEvenDistribution}</strong> servers total (
-              {additionalServersNeeded > 0
-                ? `add ${additionalServersNeeded} more`
-                : "already even"}
-              ).
-            </p>
-          ) : (
-            <p className="text-red-400">
-              ⚠️ Cannot evenly distribute more servers without exceeding rack RU limits.
-            </p>
-          )}
+
+
+          
+            {parsedTotalServers > 0 &&
+             parsedServerRU > 0 &&
+             parsedRackTotal > 0 &&
+             parsedRuPerRack > 0 && (
+              serversForEvenDistribution !== null ? (
+                <p>
+                  To evenly distribute servers across all racks: <strong>{serversForEvenDistribution}</strong> servers total (
+                  {additionalServersNeeded > 0
+                    ? `add ${additionalServersNeeded} more`
+                    : "already even"}
+                  ).
+                </p>
+              ) : (
+                <p className="text-red-400">
+                  ⚠️ Cannot evenly distribute more servers without exceeding rack RU limits.
+                </p>
+              )
+            )}
+
+
+
+          
 
           <div className="mt-4 flex gap-2">
             <button
