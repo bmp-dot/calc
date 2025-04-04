@@ -162,7 +162,7 @@ export default function RackCalculator() {
           <div className="mt-4 flex gap-2">
             <button
               onClick={() => setShowDistribution(!showDistribution)}
-              className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
+              className="distro-button"
             >
               {showDistribution ? 'Hide' : 'Show'} Server Distribution
             </button>
