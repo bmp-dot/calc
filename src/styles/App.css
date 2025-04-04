@@ -1,70 +1,55 @@
+/* src/styles/App.css */
 .tab-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #111827; /* match app color tailwinds bg-gray-900  */
+  background-color: #111827; /* bg-gray-900 */
 }
+
 .tab-buttons {
   display: flex;
-  border-bottom: 2px solid #7A1FA2;
+  gap: 2px; /* Small gap between tabs for separation */
 }
+
 .tab-button {
-  flex: 1;
   padding: 10px 20px;
-  background: #f0f0f0;
-  border: none;
+  background: #374151; /* bg-gray-700, inactive tab background */
+  color: #ffffff; /* White text */
+  border: 1px solid #4b5563; /* bg-gray-600 border for subtle contrast */
+  border-bottom: none; /* Remove bottom border for active tab effect */
+  border-top-left-radius: 6px; /* Rounded top corners */
+  border-top-right-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  color: #333;
-  transition: background 0.3s;
+  transition: background 0.3s, border-color 0.3s;
 }
+
 .tab-button:hover {
-  background: #e0e0e0;
+  background: #4b5563; /* bg-gray-600 */
+  border-color: #6b7280; /* Slightly lighter border on hover */
 }
+
 .tab-button.active {
-  background: #7A1FA2;
+  background: #7A1FA2; /* Active tab matches your purple */
   color: white;
+  border: 1px solid #7A1FA2; /* Match border to background */
+  border-bottom: 1px solid #111827; /* Blend into content background */
+  position: relative; /* For z-index if needed */
+  z-index: 1; /* Ensure active tab is above content */
 }
+
 .tab-content {
+  background: #111827; /* bg-gray-900, matches container */
+  border: 1px solid #4b5563; /* Border around content to connect with tabs */
+  border-top: none; /* No top border to blend with active tab */
   padding: 20px;
+  margin-top: -1px; /* Pull content up to overlap inactive tab borders */
 }
+
 .tab-pane {
   display: none;
 }
-.tab-pane.active {
-  display: block;
-}.tab-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.tab-buttons {
-  display: flex;
-  border-bottom: 2px solid #7A1FA2;
-}
-.tab-button {
-  flex: 1;
-  padding: 10px 20px;
-  background: #f0f0f0;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  color: #333;
-  transition: background 0.3s;
-}
-.tab-button:hover {
-  background: #e0e0e0;
-}
-.tab-button.active {
-  background: #7A1FA2;
-  color: white;
-}
-.tab-content {
-  padding: 20px;
-}
-.tab-pane {
-  display: none;
-}
+
 .tab-pane.active {
   display: block;
 }
