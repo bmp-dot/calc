@@ -79,6 +79,6 @@
   background: linear-gradient(to right, #7A1FA2, #9333ea);
 /*  border: 1px solid transparent; */
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   transition: background-color 0.2s ease;
 }
