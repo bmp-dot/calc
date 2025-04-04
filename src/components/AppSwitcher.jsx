@@ -4,7 +4,7 @@ import RackCalculator from './rack';
 import '../styles/App.css';
 
 function AppSwitcher() {
-  const [activeTab, setActiveTab] = React.useState('calculator');
+  const [activeTab, setActiveTab] = React.useState('Capacity');
   const handleTabClick = (tab) => setActiveTab(tab);
 
   return (
