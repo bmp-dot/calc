@@ -27,7 +27,7 @@ function AppSwitcher() {
         <div className={`tab-pane ${activeTab === 'Capacity' ? 'active' : ''}`}>
           <CalculatorApp />
         </div>
-        <div className={`tab-pane ${activeTab === 'Racks' ? 'active' : ''}`}>
+        <div className={`tab-pane ${activeTab === 'Rack' ? 'active' : ''}`}>
           <RackCalculator />
         </div>
       </div>
