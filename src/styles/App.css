@@ -13,7 +13,7 @@
 .tab-buttons {
   display: flex;
   gap: 0.5rem; /* Space between tabs */
-  margin-bottom: 1.5rem; /* Space below tabs */
+  margin-bottom: 0.5rem; /* Space below tabs */
   width: 100%;
   max-width: 1024px; /* Matches CalculatorApp's max-w-4xl */
   margin-left: auto;
