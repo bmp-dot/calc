@@ -1,0 +1,74 @@
+/* src/styles/App.css */
+.tab-container {
+  background-color: #111827; /* bg-gray-900 */
+  min-height: 100vh;
+  padding: 1rem;
+}
+@media (min-width: 640px) {
+  .tab-container {
+    padding: 2rem;
+  }
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 0.5rem; /* Space between tabs */
+  margin-bottom: 0.5rem; /* Space below tabs */
+  width: 100%;
+  max-width: 1024px; /* Matches CalculatorApp's max-w-4xl */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tab-button {
+  position: relative;
+  padding: 0.5rem 1.5rem; /* Sleek padding */
+  background: rgba(31, 41, 55, 0.5); /* Glassy bg-gray-800/50 */
+  color: #d1d5db; /* text-gray-200 */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* Medium weight */
+  border-radius: 9999px; /* Pill shape */
+  transition: all 0.3s ease-out; /* Smooth transition */
+  cursor: pointer;
+}
+
+.tab-button:hover {
+  background: rgba(55, 65, 81, 0.7); /* bg-gray-700/70 */
+  color: #f3f4f6; /* hover:text-gray-100 */
+}
+
+.tab-button.active {
+  background: linear-gradient(to right, #7A1FA2, #9333ea); /* Modern gradient */
+  color: white;
+  transform: scale(1.05); /* Slight pop */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #7A1FA2;
+  opacity: 0.2;
+  filter: blur(8px); /* Subtle glow */
+  border-radius: 9999px;
+  z-index: -1;
+}
+
+.tab-content {
+  width: 100%;
+  max-width: 1024px; /* Matches max-w-4xl */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tab-pane {
+  opacity: 0; /* Start hidden */
+  display: none; /* Ensure inactive panes are removed from layout */
+  transition: opacity 0.3s ease; /* Fade effect */
+}
+
+.tab-pane.active {
+  opacity: 1; /* Fully visible */
+  display: block; /* Show the active pane */
+}
