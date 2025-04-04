@@ -17,7 +17,6 @@ export default function CalculatorApp() {
   const [backendsPerDomain, setBackendsPerDomain] = useState(null);
   const [failureDomainUsable, setFailureDomainUsable] = useState(null);
   const [capacityToRecover, setCapacityToRecover] = useState(null);
-  const [dataStripe, setDataStripe] = useState(''); // Added new state for data stripe
 
   useEffect(() => {
     const servers = parseInt(numServers) || 0;
@@ -32,7 +31,6 @@ export default function CalculatorApp() {
     const spareValue = parseInt(spare) || 0;
     const hostFailuresValue = parseInt(hostFailures) || 0;
     const failureDomainValue = parseInt(failureDomain) || 0;
-    const dataStripeValue = parseInt(dataStripe) || 0; // Use the new state instead
 
     const totalDrives = (servers * nvme) + (servers * fourKDrivesCount);
 
@@ -50,7 +48,7 @@ export default function CalculatorApp() {
       setCapacityToRecover(null);
     }
 
-    // Use dataStripeValue instead of calculated dataValue
+    const dataValue = servers > parityValue ? Math.min(16, servers - parityValue - 1) : 0;
     let totalUsableCapacity = 0;
 
     let efficiencyFactor = 0.9;
@@ -61,9 +59,9 @@ export default function CalculatorApp() {
     else if (rawTotalCapacity >= 5000) efficiencyFactor = 0.93;
     else if (rawTotalCapacity >= 1000) efficiencyFactor = 0.92;
 
-    if (servers > spareValue && dataStripeValue + parityValue > 0) {
+    if (servers > spareValue && dataValue + parityValue > 0) {
       totalUsableCapacity =
-        rawTotalCapacity * ((servers - spareValue) / servers) * (dataStripeValue / (dataStripeValue + parityValue)) * efficiencyFactor;
+        rawTotalCapacity * ((servers - spareValue) / servers) * (dataValue / (dataValue + parityValue)) * efficiencyFactor;
     }
 
     const efficiencyValue = rawTotalCapacity > 0 ? totalUsableCapacity / rawTotalCapacity : 0;
@@ -100,7 +98,7 @@ export default function CalculatorApp() {
       setBackendsPerDomain(null);
       setFailureDomainUsable(null);
     }
-  }, [numServers, numNVMe, nvmeSize, fourKDrivers, parity, spare, failureDomain, hostFailures, dataStripe]);
+  }, [numServers, numNVMe, nvmeSize, fourKDrivers, parity, spare, failureDomain, hostFailures]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white p-4 sm:p-8">
@@ -178,16 +176,13 @@ export default function CalculatorApp() {
             )}
             <div>
               <label className="block text-sm mb-1 text-gray-300">Data Stripe</label>
-              <select
-                value={dataStripe}
-                onChange={(e) => setDataStripe(e.target.value)}
-                className="w-full p-2 border rounded-lg bg-gray-700 border-gray-600 text-white"
-              >
-                <option value="">Select Data Stripe</option>
-                {Array.from({ length: 14 }, (_, i) => i + 3).map((value) => (
-                  <option key={value} value={value}>{value}</option>
-                ))}
-              </select>
+              <input
+                type="number"
+                value={parity ? Math.min(16, (parseInt(numServers) || 0) - parseInt(parity) - 1) : ''}
+                readOnly
+                placeholder="Data Stripe (auto-calculated)"
+                className="w-full p-2 border rounded-lg bg-gray-600 border-gray-600 text-white cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
             </div>
             <div>
               <label className="block text-sm mb-1 text-gray-300">Protection Level</label>
