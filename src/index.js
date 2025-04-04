@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import CalculatorApp from './App'; // Make sure App.jsx is in the same folder
+import ReactDOM from 'react-dom';
+import AppSwitcher from './components/AppSwitcher';
 import './index.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <React.StrictMode>
-    <CalculatorApp />
-  </React.StrictMode>
+    <AppSwitcher />
+  </React.StrictMode>,
+  document.getElementById('root')
 );
