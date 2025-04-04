@@ -93,12 +93,13 @@ export default function CalculatorApp() {
           <input
             type="text"
             placeholder="# Compute Cores per BE"
-            className="p-2 border rounded-lg"
+            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
           />
           <input
             type="text"
             placeholder="Percent Full"
-            className="p-2 border rounded-lg"
+            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
+            
           />
           <input
             type="text"
@@ -108,7 +109,7 @@ export default function CalculatorApp() {
             className="p-2 border rounded-lg bg-gray-200 cursor-not-allowed"
           />
           <select
-            className="p-2 border rounded-lg"
+             className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
             
             
           >
