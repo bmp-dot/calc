@@ -238,12 +238,14 @@ export default function CalculatorApp() {
             </div>
 
     <h2 className="text-xl font-bold mb-4 text-purple-300">Fault Simulations</h2>
-
+        <div>
+        <label className="block text-sm mb-1 text-gray-300">Percent Full/label></label>
           <input
             type="text"
             placeholder="Percent Full"
             className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded-lg"
           />
+        </div>
           <input
             type="text"
             value={failureDomainUsable ? failureDomainUsable.split(': ')[1] : ''}
