@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/App.css';
 
 export default function RackCalculator() {
   // Allow inputs to be empty strings for better UX
@@ -174,7 +175,7 @@ export default function RackCalculator() {
                 setRuPerRack('');
                 setShowDistribution(false);
               }}
-              className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
+              className="reset-button"
             >
               Reset
             </button>
